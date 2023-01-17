@@ -1,31 +1,62 @@
 package com.recipiesbook.services.impl;
 
-import com.recipiesbook.model.Ingredients;
 import com.recipiesbook.model.Recipe;
 import com.recipiesbook.services.RecipeService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
-    Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
+    public Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
     public static int id = 0;
 
     @Override
-    public void addRecipe(String nameRecipe, int minutes, List<Ingredients> ingredientsList, List<String> steps){
-        recipeMap.put(id++, new Recipe(nameRecipe, minutes, ingredientsList, steps));
+    public int addRecipe(Recipe recipe) {
+        recipeMap.put(id++, recipe);
+        return id;
     }
 
     @Override
-    public Recipe getRecipe(int id){
-        if(recipeMap.containsKey(id) && id > 0){
-            return recipeMap.get(id);
-        } else {
-            throw new IllegalArgumentException("Рецепта с данным id не существует.");
+    public Recipe getRecipe(int id) {
+        for (Recipe recipe : recipeMap.values()) {
+            if (recipeMap.containsKey(id) && id > 0) {
+                return recipeMap.get(id);
+            }
         }
+        return null;
     }
+
+    @Override
+    public Map<Integer, Recipe> getAllRecipe() {
+        if (!recipeMap.isEmpty()) {
+            return recipeMap;
+        }
+        return null;
+    }
+
+    @Override
+    public Recipe editRecipe(int id, Recipe recipe) {
+        for (Recipe recipes : recipeMap.values()) {
+            if (recipeMap.containsKey(id)) {
+                recipeMap.put(id, recipe);
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteRecipe(int id) {
+        for (Recipe recipes : recipeMap.values()) {
+            if (recipeMap.containsKey(id)) {
+                recipeMap.remove(id);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
