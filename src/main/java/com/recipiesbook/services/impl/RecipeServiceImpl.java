@@ -20,10 +20,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipe(int id) {
-        for (Recipe recipe : recipeMap.values()) {
-            if (recipeMap.containsKey(id) && id > 0) {
-                return recipeMap.get(id);
-            }
+        if (recipeMap.containsKey(id) && id > 0) {
+            return recipeMap.get(id);
         }
         return null;
     }
@@ -38,25 +36,19 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe editRecipe(int id, Recipe recipe) {
-        for (Recipe recipes : recipeMap.values()) {
-            if (recipeMap.containsKey(id)) {
-                recipeMap.put(id, recipe);
-                return recipe;
-            }
+        if (recipeMap.containsKey(id)) {
+            recipeMap.put(id, recipe);
+            return recipe;
         }
         return null;
     }
 
     @Override
     public boolean deleteRecipe(int id) {
-        for (Recipe recipes : recipeMap.values()) {
-            if (recipeMap.containsKey(id)) {
-                recipeMap.remove(id);
-                return true;
-            }
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
         }
         return false;
     }
-
-
 }

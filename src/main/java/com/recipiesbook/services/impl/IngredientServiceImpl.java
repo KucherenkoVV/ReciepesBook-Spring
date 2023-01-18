@@ -21,10 +21,8 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredients getIngredient(int id) {
-        for (Ingredients ingredients : ingredientsMap.values()) {
-            if (ingredientsMap.containsKey(id) && id > 0) {
-                return ingredientsMap.get(id);
-            }
+        if (ingredientsMap.containsKey(id) && id > 0) {
+            return ingredientsMap.get(id);
         }
         return null;
     }
@@ -39,22 +37,18 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredients editIngredient(int id, Ingredients ingredient) {
-        for (Ingredients ingredients : ingredientsMap.values()) {
-            if (ingredientsMap.containsKey(id)) {
-                ingredientsMap.put(id, ingredient);
-                return ingredient;
-            }
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.put(id, ingredient);
+            return ingredient;
         }
         return null;
     }
 
     @Override
     public boolean deleteIngredient(int id) {
-        for (Ingredients ingredients : ingredientsMap.values()) {
-            if (ingredientsMap.containsKey(id)) {
-                ingredientsMap.remove(id);
-                return true;
-            }
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.remove(id);
+            return true;
         }
         return false;
     }

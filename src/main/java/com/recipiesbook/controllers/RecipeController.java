@@ -35,7 +35,7 @@ public class RecipeController {
         return ResponseEntity.ok(allRecipe);
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Integer> addRecipe(@RequestBody Recipe recipe) {
         int id = recipeService.addRecipe(recipe);
         return ResponseEntity.ok().body(id);
