@@ -10,20 +10,46 @@ import java.util.Map;
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
-    Map<Integer, Ingredients> ingredientsMap = new LinkedHashMap<>();
+    public Map<Integer, Ingredients> ingredientsMap = new LinkedHashMap<>();
     public static int id = 0;
 
     @Override
-    public void addIngredient(String nameIngredient, int count, String units) {
-        ingredientsMap.put(id++, new Ingredients(nameIngredient, count, units));
+    public int addIngredient(Ingredients ingredients) {
+        ingredientsMap.put(id++, ingredients);
+        return id;
     }
 
     @Override
     public Ingredients getIngredient(int id) {
         if (ingredientsMap.containsKey(id) && id > 0) {
             return ingredientsMap.get(id);
-        } else {
-            throw new IllegalArgumentException("Данного ингредиента не существует.");
         }
+        return null;
+    }
+
+    @Override
+    public Map<Integer, Ingredients> getAllIngredients() {
+        if (!ingredientsMap.isEmpty()) {
+            return ingredientsMap;
+        }
+        return null;
+    }
+
+    @Override
+    public Ingredients editIngredient(int id, Ingredients ingredient) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.put(id, ingredient);
+            return ingredient;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteIngredient(int id) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.remove(id);
+            return true;
+        }
+        return false;
     }
 }
