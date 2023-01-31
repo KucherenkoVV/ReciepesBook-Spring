@@ -3,6 +3,8 @@ package com.recipiesbook.services.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipiesbook.exception.JsonTypeException;
+import com.recipiesbook.exception.NotFindFileException;
 import com.recipiesbook.model.Ingredients;
 import com.recipiesbook.services.FilesService;
 import com.recipiesbook.services.IngredientService;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -25,8 +28,8 @@ public class IngredientServiceImpl implements IngredientService {
     private String ingredientFileName;
 
     @PostConstruct
-    private void init(){
-       readFromFile();
+    private void init() throws IOException {
+        readFromFile();
     }
 
     public IngredientServiceImpl(FilesService filesService) {
@@ -75,7 +78,7 @@ public class IngredientServiceImpl implements IngredientService {
         return false;
     }
 
-    private void saveToFile(){
+    private void saveToFile() {
         try {
             String json = new ObjectMapper().writeValueAsString(ingredientsMap);
             filesService.saveToFile(json, ingredientFileName);
@@ -84,13 +87,14 @@ public class IngredientServiceImpl implements IngredientService {
         }
     }
 
-    private void readFromFile(){
-        String json = filesService.readFromFile(ingredientFileName);
+    private void readFromFile() {
         try {
+            String json = filesService.readFromFile(ingredientFileName);
             ingredientsMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredients>>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

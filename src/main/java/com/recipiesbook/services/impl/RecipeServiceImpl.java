@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -81,7 +82,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
     }
 
-    private void readFromFile(){
+    private void readFromFile() {
         String json = filesService.readFromFile(recipeFileName);
         try {
             recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
