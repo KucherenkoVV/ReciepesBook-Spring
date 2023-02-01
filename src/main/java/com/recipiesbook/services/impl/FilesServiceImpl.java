@@ -1,6 +1,5 @@
 package com.recipiesbook.services.impl;
 
-import com.recipiesbook.exception.NotFindFileException;
 import com.recipiesbook.services.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -41,8 +40,9 @@ public class FilesServiceImpl implements FilesService {
         try {
             return Files.readString(path);
         } catch (IOException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
+        return dataFilePath;
     }
 
     @Override
@@ -61,6 +61,16 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public File getDataFile(){
         return new File(dataFilePath +"/" +recipeFileName);
+    }
+
+    @Override
+    public Path createTempFile(String suffix) {
+        try {
+            Path path = Files.createTempFile(Path.of(dataFilePath), "temp", suffix);
+            return path;
+        } catch(IOException e){
+            throw new RuntimeException();
+        }
     }
 
 }
