@@ -116,10 +116,11 @@ public class RecipeServiceImpl implements RecipeService {
         Path path = filesService.createTempFile("RecipeReport");
         for (Recipe recipe : recipeMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(recipe.getNameRecipe())
-                        .append(recipe.getMinutes() + "\n")
+                writer.append("Название: "+recipe.getNameRecipe())
+                        .append("\nВремя приготовления: "+recipe.getMinutes())
+                        .append("\nСписок ингредиентов: \n\t")
                         .append(String.valueOf(recipe.getIngredientsList()))
-                        .append("\n" + recipe.getSteps());
+                        .append("\n Инструкция по приготовлению: \n\t" + recipe.getSteps());
                 writer.append("\n");
             }
         }
