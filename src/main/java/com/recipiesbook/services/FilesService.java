@@ -1,9 +1,7 @@
 package com.recipiesbook.services;
 
-import com.recipiesbook.exception.NotFindFileException;
-
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 
 public interface FilesService {
 
@@ -14,4 +12,6 @@ public interface FilesService {
     boolean cleanDataFile(String dataFileName);
 
     File getDataFile();
+
+    Path createTempFile(String suffix);
 }
